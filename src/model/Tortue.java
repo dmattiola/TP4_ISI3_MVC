@@ -1,24 +1,8 @@
 package model;
 
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
 import java.util.*;
-import java.io.*;
+import view.FeuilleDessin;
 
-
-/*************************************************************************
-
-	Un petit Logo minimal qui devra etre ameliore par la suite
-
-	Source originale : J. Ferber - 1999-2001
-
-			   Cours de DESS TNI - Montpellier II
-
-	@version 2.0
-	@date 25/09/2001
-
-**************************************************************************/
 
 /** La classe Tortue qui se deplace en coordonnees polaires
  * 
@@ -33,120 +17,115 @@ import java.io.*;
 public class Tortue extends Observable{
 
 	// Attributs statiques	
-	protected static final int rp=10, rb=5; // Taille de la pointe et de la base de la fleche
-	protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
-	
+	private static final int rp=10, rb=5; // Taille de la pointe et de la base de la fleche
+	private static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
+
+    public static double getRatioDegRad() {
+        return ratioDegRad;
+    }
+
+    public static int getRp() {
+        return rp;
+    }
+
+    public static int getRb() {
+        return rb;
+    }
+
 	// Attributs
-	protected ArrayList<Segment> listSegments; // Trace de la tortue
+	private int x,y;	
 	
-	protected int x, y;	// Coordonnees de la tortue
-	protected int dir;	// Direction de la tortue (angle en degres)
-	protected boolean crayon; // par defaut on suppose qu'on dessine
+        private int dir;// Direction de la tortue (angle en degres)
+        private boolean crayon;// par defaut on suppose qu'on dessine
 	protected int coul;
 	
 	// Methodes
 	public void setColor(int n) {coul = n;}
 	public int getColor() {return coul;}
 
-	public Tortue() { // FeuilleDessin f) {
-		// feuille = f;
-		// feuille.addTortue(this);	
-		listSegments = new ArrayList<Segment>();
-		reset();
+	public Tortue() {
+            this.setPosition(500/2, 400/2);
+            this.dir = -90;
+            this.setColor(0);
+            this.crayon = true;
 	}
-
-	public void reset() {
-		// on initialise la position de la tortue
-		x = 0;
-		y = 0;
-		dir = -90;
-		coul = 0;
-		crayon = true;
-		listSegments.clear();
-  	}
 
 	public void setPosition(int newX, int newY) {
-		x = newX;
-		y = newY;
+		this.x = newX;
+		this.y = newY;
 	}
 
-	protected Color decodeColor(int c) {
-		switch(c) {
-			case 0: return(Color.black);
-			case 1: return(Color.blue);
-			case 2: return(Color.cyan);
-			case 3: return(Color.darkGray);
-			case 4: return(Color.red);
-			case 5: return(Color.green);
-			case 6: return(Color.lightGray);
-			case 7: return(Color.magenta);
-			case 8: return(Color.orange);
-			case 9: return(Color.gray);
-			case 10: return(Color.pink);
-			case 11: return(Color.yellow);
-			default : return(Color.black);
-		}
-	}
+	/** quelques classiques */
+        public void reset() {
+            // on initialise la position de la tortue
+            this.x = 0;
+            this.y = 0;
+            this.dir = -90;
+            this.setColor(0);
+            this.crayon = true;
+        }
+    
+    /** les procedures de base de fonctionnement de la tortue */
 
-	/** les procedures de base de fonctionnement de la tortue */
-
-	// avancer de n pas
-	public void avancer(int dist) {
-		int newX = (int) Math.round(x+dist*Math.cos(ratioDegRad*dir));
-		int newY = (int) Math.round(y+dist*Math.sin(ratioDegRad*dir));
-		
-		if (crayon==true) {
-			Segment seg = new Segment();
-			
-			seg.ptStart.x = x;
-			seg.ptStart.y = y;
-			seg.ptEnd.x = newX;
-			seg.ptEnd.y = newY;
-			seg.color = decodeColor(coul);
-	
-			listSegments.add(seg);
-		}
-
-		x = newX;
-		y = newY;
-	}
+    
+    
+    // avancer de n pas
+    public void avancer(int dist) {
+        int newX = (int) Math.round(this.getX()+dist*Math.cos(getRatioDegRad()*this.getDir()));
+        int newY = (int) Math.round(this.getY()+dist*Math.sin(getRatioDegRad()*this.getDir()));
+        this.setPosition(newX,newY);
+        this.setChanged();
+        this.notifyObservers();
+    }
 
 	// aller a droite
 	public void droite(int ang) {
-		dir = (dir + ang) % 360;
+		this.dir = (this.getDir() + ang) % 360;
+                this.setChanged();
+                this.notifyObservers();
 	}
 
 	// aller a gauche
 	public void gauche(int ang) {
-		dir = (dir - ang) % 360;
+		this.dir = (this.getDir() - ang) % 360;
+                this.setChanged();
+                this.notifyObservers();
 	}
 
 	// baisser le crayon pour dessiner
 	public void baisserCrayon() {
-		crayon = true;
+		this.crayon = true;
+                this.setChanged();
+                this.notifyObservers();
 	}
 
 	// lever le crayon pour ne plus dessiner
 	public void leverCrayon() {
-		crayon = false;
+		this.crayon = false;
+                this.setChanged();
+                this.notifyObservers();
 	}
 
 	// pour changer de couleur de dessin
 	public void couleur(int n) {
-		coul = n % 12;
+		this.setColor(n % 12);
+                this.setChanged();
+                this.notifyObservers();
 	}
 
 	public void couleurSuivante() {
-	 	couleur(coul+1);
+	 	couleur(this.getColor()+1);
+                this.setChanged();
+                this.notifyObservers();
 	}
-
-	/** quelques classiques */
-
+        
 	public void carre() {
 		for (int i=0;i<4;i++) {
 			avancer(100);
 			droite(90);
 		}
+                this.setChanged();
+                this.notifyObservers();
 	}
 
 	public void poly(int n, int a) {
@@ -154,14 +133,45 @@ public class Tortue extends Observable{
 			avancer(n);
 			droite(360/a);
 		}
+                this.setChanged();
+                this.notifyObservers();
 	}
 
 	public void spiral(int n, int k, int a) {
 		for (int i = 0; i < k; i++) {
-			couleur(coul+1);
+			couleur(this.getColor()+1);
 			avancer(n);
 			droite(360/a);
 			n = n+1;
 		}
+                this.setChanged();
+                this.notifyObservers();
 	}
+    
+        /** les procedures Logo qui combine plusieurs commandes..*/
+	public void proc1() {
+		this.carre();
+	}
+
+	public void proc2() {
+		this.poly(60,8);
+	}
+
+	public void proc3() {
+		this.spiral(50,40,6);
+	}
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getDir() {
+        return dir;
+    }
+
+
 }
