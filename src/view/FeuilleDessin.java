@@ -21,11 +21,10 @@ import model.Segment;
 public class FeuilleDessin extends JPanel implements Observer{
     
 	private ArrayList<Tortue> tortues; // la liste des tortues enregistrees
-	private Controller c;
+        private Tortue t_courante;
         
-	public FeuilleDessin(Controller c) {
+	public FeuilleDessin() {
 		tortues = new ArrayList<Tortue>();
-                this.c=c;
 	}
 
 	public void addTortue(Tortue o) {
@@ -65,12 +64,12 @@ public class FeuilleDessin extends JPanel implements Observer{
 		
 		//Calcule les 3 coins du triangle a partir de
 		// la position de la tortue p
-		Point p = new Point(c.getT_courante().getX(),c.getT_courante().getY());
+		Point p = new Point(this.t_courante.getX(),this.t_courante.getY());
 		Polygon arrow = new Polygon();
 
 		//Calcule des deux bases
 		//Angle de la droite
-		double theta=Tortue.getRatioDegRad()*(-c.getT_courante().getDir());
+		double theta=Tortue.getRatioDegRad()*(-this.t_courante.getDir());
 		//Demi angle au sommet du triangle
 		double alpha=Math.atan( (float)Tortue.getRb() / (float)Tortue.getRp() );
 		//Rayon de la fleche
@@ -93,4 +92,12 @@ public class FeuilleDessin extends JPanel implements Observer{
     public void update(Observable o, Object o1) {
         this.repaint();
    }
+
+    public Tortue getT_courante() {
+        return t_courante;
+    }
+
+    public void setT_courante(Tortue t_courante) {
+        this.t_courante = t_courante;
+    }
 }

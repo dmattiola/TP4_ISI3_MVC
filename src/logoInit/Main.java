@@ -19,9 +19,9 @@ public class Main {
     //Instanciation de notre modèle
         Tortue t = new Tortue();
     //Création du contrôleur
-        Controller controler = new Controller(t);
+        Controller controler = new Controller();
     //Création de notre fenêtre avec le contrôleur en paramètre
-        SimpleLogo sl = new SimpleLogo(controler);
+        SimpleLogo sl = new SimpleLogo(controler,t);
     //Ajout de la fenêtre comme observer de notre modèle
         
     }

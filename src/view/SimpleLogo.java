@@ -38,10 +38,10 @@ public class SimpleLogo extends JFrame {
 		System.exit(0);
 	}
 
-	public SimpleLogo(Controller c) {
+	public SimpleLogo(Controller c, Tortue t) {
 		super("un logo tout simple");
                 this.c=c;
-		logoInit();
+		logoInit(t);
 		
 		addWindowListener(new WindowAdapter() {
 		    @Override
@@ -53,9 +53,20 @@ public class SimpleLogo extends JFrame {
                 
 	}
 
-	public void logoInit() {
+	public void logoInit(Tortue t) {
 		getContentPane().setLayout(new BorderLayout(10,10));
 
+                feuille = new FeuilleDessin(); //500, 400);
+		feuille.setBackground(Color.white);
+		feuille.setSize(new Dimension(600,400));
+		feuille.setPreferredSize(new Dimension(600,400));
+			
+		getContentPane().add(feuille,"Center");
+		
+                feuille.setT_courante(t);
+		feuille.addTortue(feuille.getT_courante());
+                feuille.getT_courante().addObserver(feuille);
+                
 		// Boutons
 		JToolBar toolBar = new JToolBar();
 		JPanel buttonPanel = new JPanel();
@@ -89,7 +100,7 @@ public class SimpleLogo extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox)e.getSource();
 				int n = cb.getSelectedIndex();
-				c.getT_courante().setColor(n);
+				feuille.getT_courante().setColor(n);
 			}
 		});
 
@@ -132,16 +143,6 @@ public class SimpleLogo extends JFrame {
 
 		getContentPane().add(p2,"South");
 
-		feuille = new FeuilleDessin(c); //500, 400);
-		feuille.setBackground(Color.white);
-		feuille.setSize(new Dimension(600,400));
-		feuille.setPreferredSize(new Dimension(600,400));
-			
-		getContentPane().add(feuille,"Center");
-		
-		feuille.addTortue(c.getT_courante());
-                c.getT_courante().addObserver(feuille);
-                
 		pack();
 		setVisible(true);
                 c.setSimpleLogo(this);
@@ -161,7 +162,7 @@ public class SimpleLogo extends JFrame {
 
 		// Replace la tortue au centre
 		Dimension size = feuille.getSize();
-		c.getT_courante().setPosition(size.width/2, size.height/2);
+		feuille.getT_courante().setPosition(size.width/2, size.height/2);
 	}
 
 	//utilitaires pour installer des boutons et des menus
