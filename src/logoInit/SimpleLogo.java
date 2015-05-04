@@ -1,5 +1,6 @@
 package logoInit;
 
+import model.Tortue;
 import java.awt.*;
 
 import javax.swing.*;
@@ -162,7 +163,8 @@ public class SimpleLogo extends JFrame implements ActionListener {
 		pack();
 		setVisible(true);
 	}
-
+        
+        
 	public String getInputValue(){
 		String s = inputValue.getText();
 		return(s);

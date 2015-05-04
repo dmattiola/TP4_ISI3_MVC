@@ -1,4 +1,4 @@
-package logoInit;
+package model;
 
 import java.awt.*;
 import javax.swing.*;
@@ -21,28 +21,16 @@ import java.io.*;
 **************************************************************************/
 
 /** La classe Tortue qui se deplace en coordonnees polaires
+ * 
+ * Modele(tortue) : aucune methode de dessin
+ * Controleur séparé de la vue actionPerformed
+ * Enelver le repaint en fin de Actionperformed
+ * a la place utilsier le pattern observer observable entre modele et vue
+ * 
+ * 
 **/
 
-public class Tortue
-{
-	// Classe interne : segment avec couleur
-	protected class Segment {
-		public Point ptStart, ptEnd;
-		public Color color;
-		
-		public Segment() {
-			ptStart = new Point(0,0);
-			ptEnd = new Point(0,0);
-		}
-		
-		public void drawSegment(Graphics graph) {
-			if (graph==null)
-				return;
-
-			graph.setColor(color);
-			graph.drawLine(ptStart.x, ptStart.y, ptEnd.x, ptEnd.y);
-		}	
-	}
+public class Tortue extends Observable{
 
 	// Attributs statiques	
 	protected static final int rp=10, rb=5; // Taille de la pointe et de la base de la fleche
@@ -81,46 +69,6 @@ public class Tortue
 		x = newX;
 		y = newY;
 	}
-	
-	public void drawTurtle (Graphics graph) {
-		if (graph==null)
-			return;
-		
-		// Dessine les segments
-		for(Iterator it = listSegments.iterator();it.hasNext();) {
-			Segment seg = (Segment) it.next();
-			seg.drawSegment(graph);
-		}
-
-		//Calcule les 3 coins du triangle a partir de
-		// la position de la tortue p
-		Point p = new Point(x,y);
-		Polygon arrow = new Polygon();
-
-		//Calcule des deux bases
-		//Angle de la droite
-		double theta=ratioDegRad*(-dir);
-		//Demi angle au sommet du triangle
-		double alpha=Math.atan( (float)rb / (float)rp );
-		//Rayon de la fleche
-		double r=Math.sqrt( rp*rp + rb*rb );
-		//Sens de la fleche
-
-		//Pointe
-		Point p2=new Point((int) Math.round(p.x+r*Math.cos(theta)),
-						 (int) Math.round(p.y-r*Math.sin(theta)));
-		arrow.addPoint(p2.x,p2.y);
-		arrow.addPoint((int) Math.round( p2.x-r*Math.cos(theta + alpha) ),
-		  (int) Math.round( p2.y+r*Math.sin(theta + alpha) ));
-
-		//Base2
-		arrow.addPoint((int) Math.round( p2.x-r*Math.cos(theta - alpha) ),
-		  (int) Math.round( p2.y+r*Math.sin(theta - alpha) ));
-
-		arrow.addPoint(p2.x,p2.y);
-		graph.setColor(Color.green);
-		graph.fillPolygon(arrow);
-    }
 
 	protected Color decodeColor(int c) {
 		switch(c) {
