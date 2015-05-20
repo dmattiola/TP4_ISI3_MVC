@@ -1,8 +1,11 @@
 package controller;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import model.JeuDeBalle;
 import view.FeuilleDessin;
 import view.SimpleLogo;
 import model.Tortue;
@@ -13,6 +16,8 @@ public class Controller implements ActionListener,MouseListener, ItemListener {
     
     private SimpleLogo s;
     private FeuilleDessin f;
+    private JeuDeBalle game;
+    private Thread th;
     
     public Controller(){
     }
@@ -49,10 +54,20 @@ public class Controller implements ActionListener,MouseListener, ItemListener {
             f.addTortue(new TortueAmelioree());
         }
         else if (action.equals("Demarrer")){
-            
+            f.setTortues(new ArrayList<Tortue>());
+            game = new JeuDeBalle(8,f);
+            game.addTortues(f);
+            game.addBalle(f);
+            game.addObserver(f);
+            th = new Thread(game);
+            th.start();
+            JButton boutton_demarrer = (JButton)ae.getSource();
+            boutton_demarrer.setEnabled(false);
         }
         else if (action.equals("Arreter")){
-            
+            th.stop();
+            JButton boutton_arreter = (JButton)ae.getSource();
+            boutton_arreter.setEnabled(false);
         }
 	else if (action.equals("Effacer")){
             s.effacer();

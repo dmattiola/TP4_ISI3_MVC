@@ -56,7 +56,7 @@ public class SimpleLogo extends JFrame {
 	public void logoInit(Tortue t) {
 		getContentPane().setLayout(new BorderLayout(10,10));
 
-                feuille = new FeuilleDessin(); //500, 400);
+                feuille = new FeuilleDessin();
 		feuille.setBackground(Color.white);
 		feuille.setSize(new Dimension(600,400));
 		feuille.setPreferredSize(new Dimension(600,400));
