@@ -10,15 +10,6 @@ import java.io.*;
 import model.Segment;
 import static model.Service.decodeColor;
 
-/**
- * Titre :        Logo
- * Description :  Un exemple de programme graphique utilisant la celebre Tortue Logo
- * Copyright :    Copyright (c) 2000
- * Societe :      LIRMM
- * @author J. Ferber
- * @version 2.0
- */
-
 public class FeuilleDessin extends JPanel implements Observer{
     
 	private ArrayList<Tortue> tortues; // la liste des tortues enregistrees
@@ -61,12 +52,14 @@ public class FeuilleDessin extends JPanel implements Observer{
 	public void showTurtles(Graphics g) {
             Tortue temp = getT_courante();
 		for(Iterator it = tortues.iterator();it.hasNext();) {
-			setT_courante((Tortue) it.next());
-			this.drawTurtle(g);
+                    Tortue t = (Tortue) it.next();
+                    setT_courante(t);
+                    t.drawTurtle(g);
 		}
             setT_courante(temp);
 	}
         
+       /* 
         public void drawTurtle (Graphics graph) {
 		if (graph==null)
 			return;
@@ -97,6 +90,8 @@ public class FeuilleDessin extends JPanel implements Observer{
         graph.setColor(decodeColor(this.getT_courante().getColor()));
         graph.fillPolygon(arrow);
     }
+    */
+        
     @Override
     public void update(Observable o, Object o1) {
         this.repaint();

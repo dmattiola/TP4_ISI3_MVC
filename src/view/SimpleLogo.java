@@ -83,9 +83,9 @@ public class SimpleLogo extends JFrame {
 		addButton(toolBar, "Avancer", "Avancer 50", null);
 		addButton(toolBar, "Droite", "Droite 45", null);
 		addButton(toolBar, "Gauche", "Gauche 45", null);
-		//addButton(toolBar, "Lever", "Lever Crayon", null);
-		//addButton(toolBar, "Baisser", "Baisser Crayon", null);
-                addButton(toolBar, "Ajouter", "Ajouter Tortue",null);
+                addButton(toolBar, "Ajouter", "Ajouter Tortue", null);
+                addButton(toolBar, "Demarrer", "Demarrer", null);
+                addButton(toolBar, "Arreter", "Arreter", null);
 
 		String[] colorStrings = {"noir", "bleu", "cyan","gris fonce","rouge",
 								 "vert", "gris clair", "magenta", "orange",
@@ -114,9 +114,9 @@ public class SimpleLogo extends JFrame {
 		addMenuItem(menuCommandes, "Avancer", "Avancer", -1);
 		addMenuItem(menuCommandes, "Droite", "Droite", -1);
 		addMenuItem(menuCommandes, "Gauche", "Gauche", -1);
-		//addMenuItem(menuCommandes, "Lever Crayon", "Lever", -1);
-		//addMenuItem(menuCommandes, "Baisser Crayon", "Baisser", -1);
                 addMenuItem(menuCommandes, "Ajouter Tortue", "Ajouter", -1);
+                addMenuItem(menuCommandes, "Demarrer", "Demarrer", -1);
+                addMenuItem(menuCommandes, "Arreter", "Arreter", -1);
 
 		JMenu menuHelp=new JMenu("Aide"); // on installe le premier menu
 		menubar.add(menuHelp);
@@ -126,7 +126,7 @@ public class SimpleLogo extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		// les boutons du bas
-		JPanel p2 = new JPanel(new GridLayout());
+		/*JPanel p2 = new JPanel(new GridLayout());
 		JButton b20 = new JButton("Proc1");
 		p2.add(b20);
 		b20.addActionListener(c);
@@ -138,7 +138,7 @@ public class SimpleLogo extends JFrame {
 		b22.addActionListener(c);
 
 		getContentPane().add(p2,"South");
-
+*/
 		pack();
 		setVisible(true);
                 c.setSimpleLogo(this);

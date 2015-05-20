@@ -72,8 +72,10 @@ public abstract class Tortue extends Observable{
     }
 
     public void setPosition(int newX, int newY) {
-            this.x = newX;
-            this.y = newY;
+        this.x = newX;
+        this.y = newY;
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /** quelques classiques */
@@ -87,8 +89,6 @@ public abstract class Tortue extends Observable{
     }
     
     /** les procedures de base de fonctionnement de la tortue */
-
-    
     
     // avancer de n pas
     public void avancer(int dist) {
@@ -118,19 +118,6 @@ public abstract class Tortue extends Observable{
             this.notifyObservers();
     }
 
-    // baisser le crayon pour dessiner
-    public void baisserCrayon() {
-            this.crayon = true;
-            this.setChanged();
-            this.notifyObservers();
-    }
-
-    // lever le crayon pour ne plus dessiner
-    public void leverCrayon() {
-            this.crayon = false;
-            this.setChanged();
-            this.notifyObservers();
-    }
 
     // pour changer de couleur de dessin
     public void couleur(int n) {
@@ -143,48 +130,6 @@ public abstract class Tortue extends Observable{
             couleur(this.getColor()+1);
             this.setChanged();
             this.notifyObservers();
-    }
-
-    public void carre() {
-            for (int i=0;i<4;i++) {
-                    avancer(100);
-                    droite(90);
-            }
-            this.setChanged();
-            this.notifyObservers();
-    }
-
-    public void poly(int n, int a) {
-            for (int j=0;j<a;j++) {
-                    avancer(n);
-                    droite(360/a);
-            }
-            this.setChanged();
-            this.notifyObservers();
-    }
-
-    public void spiral(int n, int k, int a) {
-            for (int i = 0; i < k; i++) {
-                    couleur(this.getColor()+1);
-                    avancer(n);
-                    droite(360/a);
-                    n = n+1;
-            }
-            this.setChanged();
-            this.notifyObservers();
-    }
-
-    /** les procedures Logo qui combine plusieurs commandes..*/
-    public void proc1() {
-            this.carre();
-    }
-
-    public void proc2() {
-            this.poly(60,8);
-    }
-
-    public void proc3() {
-            this.spiral(50,40,6);
     }
 
     public int getX() {
