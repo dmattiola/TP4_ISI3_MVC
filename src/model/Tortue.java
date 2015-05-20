@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Graphics;
 import java.util.*;
 import view.FeuilleDessin;
 
@@ -14,7 +15,7 @@ import view.FeuilleDessin;
  * 
 **/
 
-public class Tortue extends Observable{
+public abstract class Tortue extends Observable{
 
     // Attributs statiques	
     private static final int rp=10, rb=5; // Taille de la pointe et de la base de la fleche
@@ -58,6 +59,13 @@ public class Tortue extends Observable{
 
     public Tortue(int n) {
         this.setPosition(500/2, 400/2);
+        this.dir = -90;
+        this.setColor(n);
+        this.crayon = true;
+    }
+    
+    public Tortue(int n, int x, int y) {
+        this.setPosition(x, y);
         this.dir = -90;
         this.setColor(n);
         this.crayon = true;
@@ -191,5 +199,5 @@ public class Tortue extends Observable{
         return dir;
     }
 
-
+    public abstract void drawTurtle(Graphics graph);
 }
