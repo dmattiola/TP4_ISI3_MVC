@@ -2,7 +2,6 @@ package model;
 
 import java.util.*;
 import java.util.logging.*;
-import static model.Service.decodeColor;
 import view.FeuilleDessin;
 
 public class JeuDeBalle extends Observable implements Runnable{
@@ -51,6 +50,9 @@ public class JeuDeBalle extends Observable implements Runnable{
    public void addTortues(FeuilleDessin f){
        f.addTortue(getBalle());
        for(int i=0;i<tortues.size();i++){
+           
+           this.f.getT_courante().setColor(tortues.get(i).getColor());
+        this.f.setCouleur_courante(tortues.get(i).getColor());
            f.addTortue(tortues.get(i));
        }
    }
@@ -72,10 +74,7 @@ public class JeuDeBalle extends Observable implements Runnable{
                     Tortue t = ((TortueAmelioree)tortues.get(i)).tortueProche(50);
                    
                     if (t != null && t != ancien_possesseur){
-                         System.out.println(decodeColor(t.getColor()));
                         donneBalle((TortueAmelioree)tortue_possesseur,(TortueAmelioree)t);
-                      //  getBalle().versTortue((TortueAmelioree)tortues.get(i));
-                        System.out.println("PAsse effectuée");
                         break;
                     }
                 }
@@ -84,14 +83,11 @@ public class JeuDeBalle extends Observable implements Runnable{
             if (nb_essai == 5){
                 Tortue t = ((TortueAmelioree)tortues.get(new Random().nextInt(nb_tortues))).tortueLaPlusProche(tortue_possesseur);
                 donneBalle((TortueAmelioree)tortue_possesseur,(TortueAmelioree)t);
-                //getBalle().versTortue((TortueAmelioree)tortues.get(tortues.indexOf(t)));
                 nb_essai=0;
             }
             nb_essai++;
-            System.out.println("possesseur de la balle : "+((TortueAmelioree)tortue_possesseur).getNom());
             try {
                 Thread.sleep(1000);
-                System.out.println("ess");
             } catch (InterruptedException ex) {
                 Logger.getLogger(JeuDeBalle.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -5,8 +5,10 @@ import static model.Service.decodeColor;
 
 public class TortueBalle extends Tortue{
     
+    // ATTRIBUTS
     private Tortue possesseur;
     
+    // CONSTRUCTEURS
     public TortueBalle(){
         super();
     }
@@ -16,6 +18,7 @@ public class TortueBalle extends Tortue{
         this.possesseur = t;
     }
     
+    // METHODES
     public void versTortue(TortueAmelioree t){
         super.setPosition(t.getX(), t.getY());
         super.setDir(t.getDir());
@@ -27,8 +30,9 @@ public class TortueBalle extends Tortue{
     @Override
     public void drawTurtle(Graphics graph){
         graph.setColor(decodeColor(this.coul));
-        graph.fillOval(possesseur.getX(),possesseur.getY(),10,10);
+        graph.fillOval(possesseur.getX()-5,possesseur.getY(),10,10);
         this.setChanged();
         this.notifyObservers();
     }
+    
 }

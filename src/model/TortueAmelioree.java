@@ -100,7 +100,7 @@ public class TortueAmelioree extends Tortue{
         //Base2
         arrow.addPoint((int) Math.round( p2.x-r*Math.cos(theta - alpha) ), (int) Math.round( p2.y+r*Math.sin(theta - alpha) ));
         arrow.addPoint(p2.x,p2.y);
-        graph.setColor(decodeColor(this.getColor()));
+        graph.setColor(decodeColor(this.coul));
         graph.fillPolygon(arrow);
         // on ajoute le nom pour les tortues améliorées
         graph.drawString(this.getNom(),this.getX()+6,this.getY());

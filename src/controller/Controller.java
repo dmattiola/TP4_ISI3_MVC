@@ -55,19 +55,16 @@ public class Controller implements ActionListener,MouseListener, ItemListener {
         }
         else if (action.equals("Demarrer")){
             f.setTortues(new ArrayList<Tortue>());
-            game = new JeuDeBalle(8,f);
+            game = new JeuDeBalle(10,f);
             game.addTortues(f);
             game.addBalle(f);
             game.addObserver(f);
+            f.setT_courante(null);
             th = new Thread(game);
             th.start();
-            JButton boutton_demarrer = (JButton)ae.getSource();
-            boutton_demarrer.setEnabled(false);
         }
         else if (action.equals("Arreter")){
             th.stop();
-            JButton boutton_arreter = (JButton)ae.getSource();
-            boutton_arreter.setEnabled(false);
         }
 	else if (action.equals("Effacer")){
             s.effacer();
@@ -90,7 +87,7 @@ public class Controller implements ActionListener,MouseListener, ItemListener {
         for(Iterator it = this.f.getTortues().iterator();it.hasNext();) {
             Tortue t = (Tortue) it.next();
             if (me.getX()>=t.getX()-t.getRp()/2 && me.getX()<=t.getX()+t.getRp()/2 && me.getY()<=t.getY() && me.getY()>=t.getY()-t.getRb() ){
-                this.f.setT_courante(t);
+                f.setT_courante(t);
             }
         }
     }
