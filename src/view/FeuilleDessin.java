@@ -8,6 +8,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.io.*;
 import model.Segment;
+import static model.Service.decodeColor;
 
 /**
  * Titre :        Logo
@@ -22,13 +23,18 @@ public class FeuilleDessin extends JPanel implements Observer{
     
 	private ArrayList<Tortue> tortues; // la liste des tortues enregistrees
         private Tortue t_courante;
+        private int couleur_courante = 0;
         
 	public FeuilleDessin() {
 		tortues = new ArrayList<Tortue>();
 	}
 
 	public void addTortue(Tortue o) {
-		tortues.add(o);
+                o.setColor(getCouleur_courante());
+		this.tortues.add(o);
+                setT_courante(o);
+                getT_courante().addObserver(this);
+                update(o,this);
 	}
 
 	public void reset() {
@@ -38,6 +44,7 @@ public class FeuilleDessin extends JPanel implements Observer{
 		}
 	}
 
+        @Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -52,10 +59,12 @@ public class FeuilleDessin extends JPanel implements Observer{
 	}
 	
 	public void showTurtles(Graphics g) {
+            Tortue temp = getT_courante();
 		for(Iterator it = tortues.iterator();it.hasNext();) {
-			Tortue t = (Tortue) it.next();
+			setT_courante((Tortue) it.next());
 			this.drawTurtle(g);
 		}
+            setT_courante(temp);
 	}
         
         public void drawTurtle (Graphics graph) {
@@ -85,7 +94,7 @@ public class FeuilleDessin extends JPanel implements Observer{
         arrow.addPoint((int) Math.round( p2.x-r*Math.cos(theta - alpha) ), (int) Math.round( p2.y+r*Math.sin(theta - alpha) ));
 
         arrow.addPoint(p2.x,p2.y);
-        graph.setColor(Color.green);
+        graph.setColor(decodeColor(this.getT_courante().getColor()));
         graph.fillPolygon(arrow);
     }
     @Override
@@ -100,4 +109,17 @@ public class FeuilleDessin extends JPanel implements Observer{
     public void setT_courante(Tortue t_courante) {
         this.t_courante = t_courante;
     }
+    
+    public ArrayList<Tortue> getTortues(){
+        return tortues;
+    }
+
+    public int getCouleur_courante() {
+        return couleur_courante;
+    }
+
+    public void setCouleur_courante(int couleur_courante) {
+        this.couleur_courante = couleur_courante;
+    }
+
 }

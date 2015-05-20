@@ -2,12 +2,18 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Iterator;
+import javax.swing.JComboBox;
 import view.FeuilleDessin;
 import view.SimpleLogo;
 import model.Tortue;
 
 
-public class Controller implements ActionListener {
+public class Controller implements ActionListener,MouseListener, ItemListener {
     
     private SimpleLogo s;
     private FeuilleDessin f;
@@ -44,12 +50,17 @@ public class Controller implements ActionListener {
 				System.err.println("ce n'est pas un nombre : " + s.getInputValue());
 			}
 		}
-		else if (action.equals("Lever")) 
+		/*else if (action.equals("Lever")){
 			this.f.getT_courante().leverCrayon();
-		else if (action.equals("Baisser"))
+                } 
+                else if (action.equals("Baisser")){
 			this.f.getT_courante().baisserCrayon();
 		// actions des boutons du bas
-		else if (action.equals("Proc1"))
+                }*/
+                else if (action.equals("Ajouter")){
+                    f.addTortue(new Tortue());
+                }
+                else if (action.equals("Proc1"))
 			this.f.getT_courante().proc1();
 		else if (action.equals("Proc2"))
 			this.f.getT_courante().proc2();
@@ -67,6 +78,33 @@ public class Controller implements ActionListener {
 
     public void setFeuilleDessin(FeuilleDessin f) {
         this.f = f;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        for(Iterator it = this.f.getTortues().iterator();it.hasNext();) {
+            Tortue t = (Tortue) it.next();
+            if (me.getX()>=t.getX()-t.getRp()/2 && me.getX()<=t.getX()+t.getRp()/2 && me.getY()<=t.getY() && me.getY()>=t.getY()-t.getRb() ){
+                this.f.setT_courante(t);
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {}
+    @Override
+    public void mouseReleased(MouseEvent me) {}
+    @Override
+    public void mouseEntered(MouseEvent me) {}
+    @Override
+    public void mouseExited(MouseEvent me) {}
+
+    @Override
+    public void itemStateChanged(ItemEvent ie) {
+        JComboBox cb = (JComboBox)ie.getSource();
+        int n = cb.getSelectedIndex();
+	this.f.getT_courante().setColor(n);
+        this.f.setCouleur_courante(n);
     }
     
     

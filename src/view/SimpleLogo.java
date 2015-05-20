@@ -66,6 +66,7 @@ public class SimpleLogo extends JFrame {
                 feuille.setT_courante(t);
 		feuille.addTortue(feuille.getT_courante());
                 feuille.getT_courante().addObserver(feuille);
+                feuille.addMouseListener(c);
                 
 		// Boutons
 		JToolBar toolBar = new JToolBar();
@@ -82,8 +83,9 @@ public class SimpleLogo extends JFrame {
 		addButton(toolBar, "Avancer", "Avancer 50", null);
 		addButton(toolBar, "Droite", "Droite 45", null);
 		addButton(toolBar, "Gauche", "Gauche 45", null);
-		addButton(toolBar, "Lever", "Lever Crayon", null);
-		addButton(toolBar, "Baisser", "Baisser Crayon", null);
+		//addButton(toolBar, "Lever", "Lever Crayon", null);
+		//addButton(toolBar, "Baisser", "Baisser Crayon", null);
+                addButton(toolBar, "Ajouter", "Ajouter Tortue",null);
 
 		String[] colorStrings = {"noir", "bleu", "cyan","gris fonce","rouge",
 								 "vert", "gris clair", "magenta", "orange",
@@ -96,14 +98,7 @@ public class SimpleLogo extends JFrame {
 		JComboBox colorList = new JComboBox(colorStrings);
 		toolBar.add(colorList);
 
-		colorList.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JComboBox cb = (JComboBox)e.getSource();
-				int n = cb.getSelectedIndex();
-				feuille.getT_courante().setColor(n);
-			}
-		});
-
+		colorList.addItemListener(c);
 
 		// Menus
 		JMenuBar menubar=new JMenuBar();
@@ -119,8 +114,9 @@ public class SimpleLogo extends JFrame {
 		addMenuItem(menuCommandes, "Avancer", "Avancer", -1);
 		addMenuItem(menuCommandes, "Droite", "Droite", -1);
 		addMenuItem(menuCommandes, "Gauche", "Gauche", -1);
-		addMenuItem(menuCommandes, "Lever Crayon", "Lever", -1);
-		addMenuItem(menuCommandes, "Baisser Crayon", "Baisser", -1);
+		//addMenuItem(menuCommandes, "Lever Crayon", "Lever", -1);
+		//addMenuItem(menuCommandes, "Baisser Crayon", "Baisser", -1);
+                addMenuItem(menuCommandes, "Ajouter Tortue", "Ajouter", -1);
 
 		JMenu menuHelp=new JMenu("Aide"); // on installe le premier menu
 		menubar.add(menuHelp);

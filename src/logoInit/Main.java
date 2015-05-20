@@ -8,6 +8,7 @@ package logoInit;
 
 import controller.Controller;
 import model.Tortue;
+import model.TortueAmelioree;
 import view.SimpleLogo;
 
 /**
@@ -17,7 +18,7 @@ import view.SimpleLogo;
 public class Main {
     public static void main(String[] args) {
     //Instanciation de notre modèle
-        Tortue t = new Tortue();
+        TortueAmelioree t = new TortueAmelioree();
     //Création du contrôleur
         Controller controler = new Controller();
     //Création de notre fenêtre avec le contrôleur en paramètre
