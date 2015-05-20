@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import view.FeuilleDessin;
 import view.SimpleLogo;
 import model.Tortue;
+import model.TortueAmelioree;
 
 
 public class Controller implements ActionListener,MouseListener, ItemListener {
@@ -58,7 +59,7 @@ public class Controller implements ActionListener,MouseListener, ItemListener {
 		// actions des boutons du bas
                 }*/
                 else if (action.equals("Ajouter")){
-                    f.addTortue(new Tortue());
+                    f.addTortue(new TortueAmelioree());
                 }
                 else if (action.equals("Proc1"))
 			this.f.getT_courante().proc1();
