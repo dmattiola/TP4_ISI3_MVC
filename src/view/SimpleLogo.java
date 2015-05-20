@@ -60,6 +60,8 @@ public class SimpleLogo extends JFrame {
 		feuille.setBackground(Color.white);
 		feuille.setSize(new Dimension(600,400));
 		feuille.setPreferredSize(new Dimension(600,400));
+                feuille.setWidth(600);
+                feuille.setHeight(400);
 			
 		getContentPane().add(feuille,"Center");
 		

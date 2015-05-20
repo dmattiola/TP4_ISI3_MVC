@@ -1,20 +1,16 @@
 package view;
 
-import controller.Controller;
 import model.Tortue;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 import java.util.*;
-import java.io.*;
-import model.Segment;
-import static model.Service.decodeColor;
 
 public class FeuilleDessin extends JPanel implements Observer{
     
 	private ArrayList<Tortue> tortues; // la liste des tortues enregistrees
         private Tortue t_courante;
         private int couleur_courante = 0;
+        private int width,height;
         
 	public FeuilleDessin() {
 		tortues = new ArrayList<Tortue>();
@@ -38,14 +34,11 @@ public class FeuilleDessin extends JPanel implements Observer{
         @Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		Color c = g.getColor();
-		
 		Dimension dim = getSize();
 		g.setColor(Color.white);
 		g.fillRect(0,0,dim.width, dim.height);
 		g.setColor(c);
-
 		showTurtles(g);
 	}
 	
@@ -115,6 +108,22 @@ public class FeuilleDessin extends JPanel implements Observer{
 
     public void setCouleur_courante(int couleur_courante) {
         this.couleur_courante = couleur_courante;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
 }
