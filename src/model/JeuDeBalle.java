@@ -49,11 +49,11 @@ public class JeuDeBalle extends Observable implements Runnable{
    
    public void addTortues(FeuilleDessin f){
        f.addTortue(getBalle());
-       for(int i=0;i<tortues.size();i++){
+       for(int i=0;i<getTortues().size();i++){
            
-           this.f.getT_courante().setColor(tortues.get(i).getColor());
-        this.f.setCouleur_courante(tortues.get(i).getColor());
-           f.addTortue(tortues.get(i));
+           this.f.getT_courante().setColor(getTortues().get(i).getColor());
+        this.f.setCouleur_courante(getTortues().get(i).getColor());
+           f.addTortue(getTortues().get(i));
        }
    }
    
@@ -66,12 +66,12 @@ public class JeuDeBalle extends Observable implements Runnable{
         isRunning = true;
         int nb_essai = 0;
         while(isRunning){
-            for (int i=0;i<tortues.size();i++){
-                if(f.getT_courante() != tortues.get(i)){
-                    tortues.get(i).moveRandom(25);
+            for (int i=0;i<getTortues().size();i++){
+                if(f.getT_courante() != getTortues().get(i)){
+                    getTortues().get(i).moveRandom(25);
                 }
-                if (tortue_possesseur == tortues.get(i)){
-                    Tortue t = ((TortueAmelioree)tortues.get(i)).tortueProche(50);
+                if (tortue_possesseur == getTortues().get(i)){
+                    Tortue t = ((TortueAmelioree)getTortues().get(i)).tortueProche(50);
                    
                     if (t != null && t != ancien_possesseur){
                         donneBalle((TortueAmelioree)tortue_possesseur,(TortueAmelioree)t);
@@ -81,7 +81,7 @@ public class JeuDeBalle extends Observable implements Runnable{
             }
             
             if (nb_essai == 5){
-                Tortue t = ((TortueAmelioree)tortues.get(new Random().nextInt(nb_tortues))).tortueLaPlusProche(tortue_possesseur);
+                Tortue t = ((TortueAmelioree)getTortues().get(new Random().nextInt(nb_tortues))).tortueLaPlusProche(tortue_possesseur);
                 donneBalle((TortueAmelioree)tortue_possesseur,(TortueAmelioree)t);
                 nb_essai=0;
             }
@@ -100,5 +100,13 @@ public class JeuDeBalle extends Observable implements Runnable{
 
     public void setBalle(TortueBalle balle) {
         this.balle = balle;
+    }
+
+    public ArrayList<Tortue> getTortues() {
+        return tortues;
+    }
+
+    public void setTortues(ArrayList<Tortue> tortues) {
+        this.tortues = tortues;
     }
 }

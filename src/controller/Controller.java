@@ -86,7 +86,7 @@ public class Controller implements ActionListener,MouseListener, ItemListener {
     public void mouseClicked(MouseEvent me) {
         for(Iterator it = this.f.getTortues().iterator();it.hasNext();) {
             Tortue t = (Tortue) it.next();
-            if (me.getX()>=t.getX()-t.getRp()/2 && me.getX()<=t.getX()+t.getRp()/2 && me.getY()<=t.getY() && me.getY()>=t.getY()-t.getRb() ){
+            if (me.getX()>=t.getX()-10 && me.getX()<=t.getX()+10 && me.getY()<=t.getY()+10 && me.getY()>=t.getY()-10 ){
                 f.setT_courante(t);
             }
         }
